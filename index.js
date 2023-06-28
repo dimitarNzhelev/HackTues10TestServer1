@@ -37,7 +37,7 @@ app.use(flash());
 
 var corsOptions = {
   // origin: "https://hacktues10-imgur-fjt5c.ondigitalocean.app/",
-  origin: "http://localhost:3001",
+  origin: "https://jellyfish-app-5kx28.ondigitalocean.app/",
   credentials: true,
 };
 app.use(cors(corsOptions));
