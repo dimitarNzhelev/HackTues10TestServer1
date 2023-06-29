@@ -59,6 +59,7 @@ router.post("/login", (req, res, next) => {
       return res.status(401).json({ error: info.message });
     }
     req.logIn(user, (err) => {
+      console.log("LOGINAA\n\n\n\n\n\n\n", user);
       if (err) {
         return res
           .status(500)
