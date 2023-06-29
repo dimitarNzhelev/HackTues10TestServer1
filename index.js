@@ -14,6 +14,7 @@ const commentsRouter = require("./routes/comments");
 const authRoutes = require("./routes/auth.js");
 const cookieParser = require("cookie-parser");
 const saveRouter = require("./routes/save");
+const cookieSession = require("cookie-session");
 
 initializePassport(passport);
 
@@ -21,34 +22,32 @@ const PORT = 8080;
 
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.set("trust proxy", 1); // add this line
-app.use(
-  session({
-    secret: "secret",
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-      secure: true,
-      maxAge: 24 * 60 * 60 * 1000,
-      sameSite: "none",
-    },
-  })
-);
 
-app.use(passport.initialize());
-app.use(passport.session()); // Add this line
 app.use(flash());
 
-const allowedOrigin = "https://jellyfish-app-5kx28.ondigitalocean.app";
+const allowedOrigin = ["https://jellyfish-app-5kx28.ondigitalocean.app"];
 
 app.use(
   cors({
-    origin: allowedOrigin,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
+    origin: allowedOrigin,
   })
 );
 
+app.use(
+  cookieSession({
+    secret: "yourSecret",
+    sameSite: "none",
+    secure: true,
+    httpOnly: true,
+  })
+);
+
+app.enable("trust proxy", 1); // add this line
+
+app.use(passport.initialize());
+app.use(passport.session()); // Add this line
 app.use("/auth", authRoutes);
 
 app.use("/dashboard", homeRouter);
