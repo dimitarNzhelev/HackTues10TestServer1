@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
-const session = require("express-session");
+// const session = require("express-session");
+const cookieSession = require("cookie-session");
 const WebSocket = require("ws");
 const http = require("http");
 const flash = require("express-flash");
@@ -41,17 +42,16 @@ app.use(flash());
 
 const allowedOrigin = ["https://jellyfish-app-5kx28.ondigitalocean.app"];
 
+const cookieSession = require("cookie-session");
+
 app.use(
-  session({
-    secret: "yourSecret",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      secure: true,
-      httpOnly: true,
-      sameSite: "none",
-      maxAge: 24 * 60 * 60 * 1000, // 24 hours
-    },
+  cookieSession({
+    name: "session",
+    keys: ["secretKey"],
+    maxAge: 24 * 60 * 60 * 1000,
+    secure: true,
+    httpOnly: true,
+    sameSite: "none",
   })
 );
 
