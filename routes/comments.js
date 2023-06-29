@@ -49,7 +49,7 @@ router.get("/:id", async (req, res) => {
 
 router.post("/:id", express.json(), async (req, res) => {
   const postId = req.body.postId;
-  const userId = req.session.passport.user;
+  const userId = req.session.user.id;
   console.log(userId);
   const commentText = req.body.commentText;
   try {

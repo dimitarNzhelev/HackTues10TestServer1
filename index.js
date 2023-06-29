@@ -1,9 +1,12 @@
 const express = require("express");
 const app = express();
 const session = require("express-session");
+const server = http.createServer(app);
+const WebSocket = require("ws");
+const http = require("http");
 const flash = require("express-flash");
-const passport = require("passport");
-const initializePassport = require("./config/passportConfig");
+// const passport = require("passport");
+// const initializePassport = require("./config/passportConfig");
 const cors = require("cors");
 const homeRouter = require("./routes/home");
 const uploadRouter = require("./routes/upload");
@@ -15,13 +18,26 @@ const authRoutes = require("./routes/auth.js");
 const cookieParser = require("cookie-parser");
 const saveRouter = require("./routes/save");
 
-initializePassport(passport);
+// initializePassport(passport);
+
+const wss = new WebSocket.Server({ server });
+
+wss.on("connection", (ws) => {
+  console.log("Client connected");
+
+  ws.on("close", () => {
+    console.log("Client disconnected");
+  });
+
+  ws.on("message", (message) => {
+    console.log("Received:", message);
+  });
+});
 
 const PORT = 8080;
 
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-
 app.use(flash());
 
 const allowedOrigin = ["https://jellyfish-app-5kx28.ondigitalocean.app"];
@@ -50,8 +66,8 @@ app.use(
   })
 );
 
-app.use(passport.initialize());
-app.use(passport.session()); // Add this line
+// app.use(passport.initialize());
+// app.use(passport.session()); // Add this line
 app.use("/auth", authRoutes);
 
 app.get("/", (req, res) => {

@@ -22,7 +22,7 @@ router.use(
 router.get("/:id", async (req, res) => {
   const postId = parseInt(req.params.id);
   try {
-    const userId = req.session.passport.user;
+    const userId = req.session.user.id;
     await toggleLike(postId, userId);
     res.status(200).json({ message: "Toggle like successful." });
   } catch (error) {
@@ -35,7 +35,7 @@ router.get("/:id/status", async (req, res) => {
   const postId = parseInt(req.params.id);
 
   try {
-    const userId = req.session.passport.user;
+    const userId = req.session.user.id;
     const likeStatus = await getLikeStatus(postId, userId);
     res.status(200).json({ likeStatus });
   } catch (error) {

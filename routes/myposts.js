@@ -41,7 +41,7 @@ router.get("/", async (req, res) => {
   try {
     console.log("SESIQ V MYPOSTS: ", req.session);
     res.send({
-      posts: await getMyPosts(req.session.passport.user),
+      posts: await getMyPosts(req.session.user.id),
     });
   } catch (err) {
     console.log(err);

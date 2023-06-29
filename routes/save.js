@@ -48,7 +48,7 @@ router.post("/:id", bodyParser.json(), async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    const userid = req.session.passport.user;
+    const userid = req.session.user.id;
     console.log(userid);
 
     const savedPosts = await getSavedPostsByUserId(userid);
