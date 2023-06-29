@@ -39,7 +39,7 @@ const s3 = new S3Client({
 
 router.get("/", async (req, res) => {
   try {
-    console.log(req.session.passport.user);
+    console.log("SESIQ V MYPOSTS: ", req.session);
     res.send({
       posts: await getMyPosts(req.session.passport.user),
     });
