@@ -14,7 +14,6 @@ const commentsRouter = require("./routes/comments");
 const authRoutes = require("./routes/auth.js");
 const cookieParser = require("cookie-parser");
 const saveRouter = require("./routes/save");
-const cookieSession = require("cookie-session");
 
 initializePassport(passport);
 
@@ -28,15 +27,19 @@ app.use(flash());
 const allowedOrigin = ["https://jellyfish-app-5kx28.ondigitalocean.app"];
 
 app.use(
-  cookieSession({
+  session({
     secret: "yourSecret",
-    sameSite: "none",
-    secure: true,
-    httpOnly: true,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: true,
+      httpOnly: true,
+      sameSite: "none"
+    }
   })
 );
 
-app.enable("trust proxy", 1); // add this line
+app.enable("trust proxy"); // add this line
 
 app.use(
   cors({
