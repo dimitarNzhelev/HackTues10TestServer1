@@ -21,15 +21,16 @@ const PORT = 8080;
 
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.set("trust proxy", 1); // add this line
 app.use(
   session({
     secret: "secret",
     resave: false,
     saveUninitialized: true,
     cookie: {
-      secure: true, // Remember to set this to true if you're using HTTPS
+      secure: true,
       maxAge: 24 * 60 * 60 * 1000,
-      sameSite: "none", // Required for cross-site cookies
+      sameSite: "none",
     },
   })
 );
@@ -42,14 +43,8 @@ const allowedOrigin = "https://jellyfish-app-5kx28.ondigitalocean.app";
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (origin === allowedOrigin || !origin) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    optionsSuccessStatus: 200,
+    origin: allowedOrigin,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   })
 );
