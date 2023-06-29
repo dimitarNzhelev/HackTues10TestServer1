@@ -33,22 +33,24 @@ app.use(
   })
 );
 app.use(passport.initialize());
+app.use(passport.session());
 app.use(flash());
 
-const allowedOrigin = 'https://jellyfish-app-5kx28.ondigitalocean.app';
+const allowedOrigin = "https://jellyfish-app-5kx28.ondigitalocean.app";
 
-app.use(cors({
-  origin: function (origin, callback) {
-    if (origin === allowedOrigin || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  optionsSuccessStatus: 200, 
-  credentials: true 
-}));
-
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (origin === allowedOrigin || !origin) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    optionsSuccessStatus: 200,
+    credentials: true,
+  })
+);
 
 app.use("/auth", authRoutes);
 
