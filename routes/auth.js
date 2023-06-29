@@ -62,6 +62,10 @@ router.post("/login", (req, res, next) => {
       console.log("LOGINAA\n\n\n\n\n\n\n");
       console.log(user);
       req.session.passport = { user: user.id };
+      console.log("SESSIQ1: ", req.session);
+      req.session.passport.user = user.id;
+      console.log("SESSIQ2: ", req.session);
+
       if (err) {
         return res
           .status(500)
