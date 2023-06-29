@@ -39,10 +39,13 @@ const s3 = new S3Client({
 
 router.get("/", async (req, res) => {
   try {
-    console.log("SESIQ V MYPOSTS: ", req.session);
-    res.send({
-      posts: await getMyPosts(req.session.user.id),
-    });
+    if (req.session.user) {
+      res.send({
+        posts: await getMyPosts(req.session.user.id),
+      });
+    } else {
+      res.send({ posts: null });
+    }
   } catch (err) {
     console.log(err);
     res.status(500).send("Server error");
