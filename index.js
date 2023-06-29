@@ -35,6 +35,13 @@ app.use(
 app.use(passport.initialize());
 app.use(flash());
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "https://jellyfish-app-5kx28.ondigitalocean.app"); 
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+
 //var corsOptions = {
   // origin: "https://hacktues10-imgur-fjt5c.ondigitalocean.app/",
   //origin: "http://localhost:3000",
