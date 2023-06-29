@@ -32,8 +32,9 @@ app.use(
     },
   })
 );
+
 app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.session()); // Add this line
 app.use(flash());
 
 const allowedOrigin = "https://jellyfish-app-5kx28.ondigitalocean.app";
