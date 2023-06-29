@@ -7,18 +7,7 @@ const {
 const router = express.Router();
 const { pool } = require("../config/dbConf");
 const bodyParser = require("body-parser");
-const cors = require("cors");
 const bcrypt = require("bcrypt");
-
-const allowedOrigin = "https://jellyfish-app-5kx28.ondigitalocean.app";
-
-router.use(
-  cors({
-    origin: allowedOrigin,
-    methods: "GET,DELETE,PUT,PATCH,POST, HEAD",
-    credentials: true,
-  })
-);
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));

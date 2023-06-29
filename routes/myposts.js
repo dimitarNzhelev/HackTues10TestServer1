@@ -13,17 +13,7 @@ const {
   DeleteObjectCommand,
   PutObjectCommand,
 } = require("@aws-sdk/client-s3");
-// const cors = require("cors");
 
-// const allowedOrigin = "https://jellyfish-app-5kx28.ondigitalocean.app";
-
-// router.use(
-//   cors({
-//     origin: allowedOrigin,
-//     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-//     credentials: true,
-//   })
-// );
 const bucketName = process.env.BUCKET_NAME;
 const bucketRegion = process.env.BUCKET_REGION;
 const accessKey = process.env.ACCESS_KEY;
