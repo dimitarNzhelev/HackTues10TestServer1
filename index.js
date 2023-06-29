@@ -35,6 +35,17 @@ app.use(
 app.use(passport.initialize());
 app.use(flash());
 
+//var corsOptions = {
+  // origin: "https://hacktues10-imgur-fjt5c.ondigitalocean.app/",
+  //origin: "http://localhost:3000",
+  //credentials: true,
+//};
+//app.use(cors(corsOptions));
+
+// app.get("/", (req, res) => {
+//   res.render("index");
+// });
+
 app.use("/auth", authRoutes);
 
 app.use("/dashboard", homeRouter);
