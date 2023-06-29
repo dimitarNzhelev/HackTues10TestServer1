@@ -1,6 +1,5 @@
 const express = require("express");
 const validator = require("validator");
-const passport = require("passport");
 const {
   validateUser,
   insertUserAndSendEmail,
@@ -16,7 +15,7 @@ const allowedOrigin = "https://jellyfish-app-5kx28.ondigitalocean.app";
 router.use(
   cors({
     origin: allowedOrigin,
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    methods: "GET,DELETE,PUT,PATCH,POST, HEAD",
     credentials: true,
   })
 );
@@ -56,34 +55,6 @@ router.get("/verify-email", async (req, res) => {
   const token = req.query.token;
   validateUser(req, res, token);
 });
-
-// passport.authenticate("local", (err, user, info) => {
-//   console.log("user", user);
-//   console.log("info", info);
-//   console.log("err", err);
-//   if (err) {
-//     return res
-//       .status(500)
-//       .json({ error: "An error occurred while logging in" });
-//   }
-//   if (!user) {
-//     return res.status(401).json({ error: info.message });
-//   }
-//   req.logIn(user, (err) => {
-//     console.log("LOGINAA\n\n\n\n\n\n\n");
-//     console.log(user);
-//     req.session.user = user;
-//     if (err) {
-//       return res
-//         .status(500)
-//         .json({ error: "An error occurred while logging in" });
-//     }
-//     return res.status(200).json({
-//       message: "Logged in successfully",
-//       user: user,
-//     });
-//   });
-// })(req, res, next);
 
 router.post("/login", async (req, res, next) => {
   try {

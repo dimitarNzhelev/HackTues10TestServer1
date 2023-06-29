@@ -1,11 +1,8 @@
 const express = require("express");
 const app = express();
-// const session = require("express-session");
 const WebSocket = require("ws");
 const http = require("http");
 const flash = require("express-flash");
-// const passport = require("passport");
-// const initializePassport = require("./config/passportConfig");
 const cors = require("cors");
 const homeRouter = require("./routes/home");
 const uploadRouter = require("./routes/upload");
@@ -17,7 +14,6 @@ const authRoutes = require("./routes/auth.js");
 const cookieParser = require("cookie-parser");
 const saveRouter = require("./routes/save");
 
-// initializePassport(passport);
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
@@ -54,7 +50,7 @@ app.use(
   })
 );
 
-app.enable("trust proxy"); // add this line
+app.enable("trust proxy");
 
 app.use(
   cors({
@@ -64,8 +60,6 @@ app.use(
   })
 );
 
-// app.use(passport.initialize());
-// app.use(passport.session()); // Add this line
 app.use("/auth", authRoutes);
 
 app.get("/", (req, res) => {
