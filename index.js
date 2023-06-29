@@ -81,6 +81,6 @@ app.use("/dashboard/posts/comments", commentsRouter);
 app.use("/dashboard/posts/save", saveRouter);
 app.use("/dashboard/posts", postsRouter);
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log("Server started on port", PORT);
 });
