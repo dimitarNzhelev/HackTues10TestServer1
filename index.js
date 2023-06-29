@@ -35,21 +35,19 @@ app.use(
 app.use(passport.initialize());
 app.use(flash());
 
-app.use(cors({
-  origin: 'https://jellyfish-app-5kx28.ondigitalocean.app',
-  optionsSuccessStatus: 200,
-  credentials: true
-}));
+const allowedOrigin = 'https://jellyfish-app-5kx28.ondigitalocean.app';
 
-app.use(function(req, res, next) {
-  const origin = req.get('Origin');
-  console.log('Origin:', origin);
-  
-  res.header("Access-Control-Allow-Origin", origin);
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  
-  next();
-});
+app.use(cors({
+  origin: function (origin, callback) {
+    if (origin === allowedOrigin || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  optionsSuccessStatus: 200, 
+  credentials: true 
+}));
 
 
 app.use("/auth", authRoutes);
