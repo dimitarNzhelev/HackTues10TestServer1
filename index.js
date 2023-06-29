@@ -27,10 +27,6 @@ app.use(flash());
 
 const allowedOrigin = ["https://jellyfish-app-5kx28.ondigitalocean.app"];
 
-app.listen(PORT, () => {
-  console.log("Server started on port", PORT);
-});
-
 app.use(
   cookieSession({
     secret: "yourSecret",
@@ -61,3 +57,7 @@ app.use("/dashboard/posts/like", likeRouter);
 app.use("/dashboard/posts/comments", commentsRouter);
 app.use("/dashboard/posts/save", saveRouter);
 app.use("/dashboard/posts", postsRouter);
+
+app.listen(PORT, () => {
+  console.log("Server started on port", PORT);
+});
