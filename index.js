@@ -27,8 +27,9 @@ app.use(
     resave: false,
     saveUninitialized: true,
     cookie: {
-      secure: true, //FOR DEVELOPMENT HTTPS
+      secure: true, // Remember to set this to true if you're using HTTPS
       maxAge: 24 * 60 * 60 * 1000,
+      sameSite: "none", // Required for cross-site cookies
     },
   })
 );
