@@ -9,6 +9,7 @@ const router = express.Router();
 const { pool } = require("../config/dbConf");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const bcrypt = require("bcrypt");
 
 const allowedOrigin = "https://jellyfish-app-5kx28.ondigitalocean.app";
 
