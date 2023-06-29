@@ -36,7 +36,7 @@ app.use(passport.initialize());
 app.use(flash());
 
 app.use(cors({
-  origin: '*',
+  origin: 'https://jellyfish-app-5kx28.ondigitalocean.app',
   optionsSuccessStatus: 200,
   credentials: true
 }));
