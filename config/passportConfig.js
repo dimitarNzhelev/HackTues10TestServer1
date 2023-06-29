@@ -25,6 +25,7 @@ function initialize(passport) {
                 console.log(err);
               }
               if (isMatch) {
+                console.log("THERE IS A MATCH");
                 return done(null, user);
               } else {
                 return done(null, false, { message: "Password is incorrect" });
