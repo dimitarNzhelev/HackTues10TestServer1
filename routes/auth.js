@@ -47,6 +47,9 @@ router.get("/verify-email", async (req, res) => {
 
 router.post("/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
+    console.log("user", user);
+    console.log("info", info);
+    console.log("err", err);
     if (err) {
       return res
         .status(500)
