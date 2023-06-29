@@ -41,6 +41,16 @@ app.use(cors({
   credentials: true
 }));
 
+app.use(function(req, res, next) {
+  const origin = req.get('Origin');
+  console.log('Origin:', origin);
+  
+  res.header("Access-Control-Allow-Origin", origin);
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  
+  next();
+});
+
 
 app.use("/auth", authRoutes);
 
