@@ -17,7 +17,7 @@ const saveRouter = require("./routes/save");
 
 initializePassport(passport);
 
-const PORT = 8080;
+const PORT = 3000;
 
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
