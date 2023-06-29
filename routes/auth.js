@@ -56,47 +56,68 @@ router.get("/verify-email", async (req, res) => {
   validateUser(req, res, token);
 });
 
-router.post("/login", (req, res, next) => {
-  passport.authenticate("local", (err, user, info) => {
-    console.log("user", user);
-    console.log("info", info);
-    console.log("err", err);
-    if (err) {
-      return res
-        .status(500)
-        .json({ error: "An error occurred while logging in" });
-    }
-    if (!user) {
-      return res.status(401).json({ error: info.message });
-    }
-    req.logIn(user, (err) => {
-      console.log("LOGINAA\n\n\n\n\n\n\n");
-      console.log(user);
-      // req.session.passport = { user: user.id };
-      console.log("SESSIQ1: ", req.session);
-      // req.session.passport.user = user.id;
-      // console.log("SESSIQ2: ", req.session);
+// passport.authenticate("local", (err, user, info) => {
+//   console.log("user", user);
+//   console.log("info", info);
+//   console.log("err", err);
+//   if (err) {
+//     return res
+//       .status(500)
+//       .json({ error: "An error occurred while logging in" });
+//   }
+//   if (!user) {
+//     return res.status(401).json({ error: info.message });
+//   }
+//   req.logIn(user, (err) => {
+//     console.log("LOGINAA\n\n\n\n\n\n\n");
+//     console.log(user);
+//     req.session.user = user;
+//     if (err) {
+//       return res
+//         .status(500)
+//         .json({ error: "An error occurred while logging in" });
+//     }
+//     return res.status(200).json({
+//       message: "Logged in successfully",
+//       user: user,
+//     });
+//   });
+// })(req, res, next);
 
-      if (err) {
-        return res
-          .status(500)
-          .json({ error: "An error occurred while logging in" });
-      }
-      return res.status(200).json({
-        message: "Logged in successfully",
-        user: user,
-      });
-    });
-  })(req, res, next);
+router.post("/login", async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    const result = await pool.query(`SELECT * FROM users WHERE email = $1`, [
+      email,
+    ]);
+    const user = result.rows[0];
+
+    if (!user || user.isverified !== true) {
+      return res.status(401).json({ error: "Invalid email or password" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (isMatch) {
+      console.log("THERE IS A MATCH");
+      req.session.user = user;
+      return res.status(200).json({ user: user });
+    }
+
+    return res.status(401).json({ message: "Password is incorrect" });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: "Server error occurred" });
+  }
 });
 
 router.get("/logout", (req, res) => {
   req.session.destroy(function (err) {
     if (err) {
       console.log(err);
-      res.json({ message: "Error occurred during logout" });
+      return res.json({ message: "Error occurred during logout" });
     } else {
-      res.json({ message: "You have logged out successfully" });
+      return res.json({ message: "You have logged out successfully" });
     }
   });
 });

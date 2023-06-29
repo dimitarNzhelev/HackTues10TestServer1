@@ -32,6 +32,7 @@ router.get("/", async (req, res) => {
       keyPairId: process.env.CDN_KEY_PAIR_ID,
     });
   }
+  console.log("POSTS");
   res.send({ posts: posts });
 });
 
@@ -40,6 +41,7 @@ router.get("/:id", async (req, res) => {
   const postData = await getPostById(postId);
   const userId = postData.user_id;
   const userData = await getUserById(userId);
+  console.log("IN SPECIFIC POST", userData);
   postData.imageUrl = getSignedUrl({
     url: "https://d2skheuztgfb2.cloudfront.net/" + postData.imagename,
     dateLessThan: new Date(Date.now() + 60 * 60 * 1000 * 24),

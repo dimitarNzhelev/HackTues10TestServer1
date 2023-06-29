@@ -15,9 +15,8 @@ router.use(
 
 router.get("/", async (req, res) => {
   console.log(req.session);
-  if (req.session.passport) {
-    const result = await getUserById(req.session.passport.user);
-    res.send({ user: result });
+  if (req.session.user) {
+    res.send({ user: req.session.user });
   } else {
     res.send({ user: null });
   }
