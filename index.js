@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 // const session = require("express-session");
-const cookieSession = require("cookie-session");
 const WebSocket = require("ws");
 const http = require("http");
 const flash = require("express-flash");
