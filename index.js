@@ -36,7 +36,7 @@ app.use(passport.initialize());
 app.use(flash());
 
 app.use(cors({
-  origin: 'https://*.ondigitalocean.app/',
+  origin: '*',
   optionsSuccessStatus: 200,
   credentials: true
 }));
