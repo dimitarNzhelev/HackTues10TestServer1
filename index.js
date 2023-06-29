@@ -40,15 +40,19 @@ app.enable("trust proxy", 1); // add this line
 
 app.use(
   cors({
+    origin: allowedOrigin,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
-    origin: allowedOrigin,
   })
 );
 
 app.use(passport.initialize());
 app.use(passport.session()); // Add this line
 app.use("/auth", authRoutes);
+
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 
 app.use("/dashboard", homeRouter);
 app.use("/dashboard/upload", uploadRouter);
