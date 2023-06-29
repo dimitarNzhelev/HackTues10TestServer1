@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 const session = require("express-session");
-const server = http.createServer(app);
 const WebSocket = require("ws");
 const http = require("http");
 const flash = require("express-flash");
@@ -19,7 +18,7 @@ const cookieParser = require("cookie-parser");
 const saveRouter = require("./routes/save");
 
 // initializePassport(passport);
-
+const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
 wss.on("connection", (ws) => {
