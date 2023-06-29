@@ -5,7 +5,17 @@ const { getUserById } = require("../controllers/userController");
 const { getCommnetsByPost } = require("../controllers/commentController");
 const { getSignedUrl } = require("@aws-sdk/cloudfront-signer");
 const { pool } = require("../config/dbConf");
+const cors = require("cors");
 
+const allowedOrigin = "https://jellyfish-app-5kx28.ondigitalocean.app";
+
+router.use(
+  cors({
+    origin: allowedOrigin,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
+  })
+);
 router.get("/", async (req, res) => {
   let posts = (
     await pool.query("SELECT * FROM posts WHERE visibility = 'listed';")

@@ -7,7 +7,17 @@ const {
   checkSavedStatus,
 } = require("../controllers/saveController");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 
+const allowedOrigin = "https://jellyfish-app-5kx28.ondigitalocean.app";
+
+router.use(
+  cors({
+    origin: allowedOrigin,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
+  })
+);
 router.get("/:id/status", async (req, res) => {
   const postId = parseInt(req.params.id);
   const userId = req.userId;

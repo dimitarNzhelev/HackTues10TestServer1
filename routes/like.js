@@ -7,6 +7,17 @@ const {
 } = require("../controllers/postController");
 
 router.use(express.json());
+const cors = require("cors");
+
+const allowedOrigin = "https://jellyfish-app-5kx28.ondigitalocean.app";
+
+router.use(
+  cors({
+    origin: allowedOrigin,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
+  })
+);
 
 router.get("/:id", async (req, res) => {
   const postId = parseInt(req.params.id);
