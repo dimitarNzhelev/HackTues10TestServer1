@@ -27,13 +27,9 @@ app.use(flash());
 
 const allowedOrigin = ["https://jellyfish-app-5kx28.ondigitalocean.app"];
 
-app.use(
-  cors({
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    credentials: true,
-    origin: allowedOrigin,
-  })
-);
+app.listen(PORT, () => {
+  console.log("Server started on port", PORT);
+});
 
 app.use(
   cookieSession({
@@ -46,6 +42,14 @@ app.use(
 
 app.enable("trust proxy", 1); // add this line
 
+app.use(
+  cors({
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
+    origin: allowedOrigin,
+  })
+);
+
 app.use(passport.initialize());
 app.use(passport.session()); // Add this line
 app.use("/auth", authRoutes);
@@ -57,7 +61,3 @@ app.use("/dashboard/posts/like", likeRouter);
 app.use("/dashboard/posts/comments", commentsRouter);
 app.use("/dashboard/posts/save", saveRouter);
 app.use("/dashboard/posts", postsRouter);
-
-app.listen(PORT, () => {
-  console.log("Server started on port", PORT);
-});
