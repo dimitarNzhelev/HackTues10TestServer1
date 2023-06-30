@@ -5,6 +5,9 @@ const { PutObjectCommand, S3Client } = require("@aws-sdk/client-s3");
 const sharp = require("sharp");
 const dotenv = require("dotenv");
 const { getUserById } = require("./userController");
+const fs = require("fs");
+const heicConvert = require("heic-convert");
+
 dotenv.config();
 const bucketName = process.env.BUCKET_NAME;
 const bucketRegion = process.env.BUCKET_REGION;
@@ -56,6 +59,12 @@ async function uploadPost(req) {
 
       if (req.file.mimetype === "image/gif") {
         fileBuffer = req.file.buffer;
+      } else if (req.file.mimetype === "image/heic") {
+        fileBuffer = await heicConvert({
+          buffer: fs.readFileSync(req.file.path),
+          format: "JPEG",
+          quality: 1,
+        });
       } else {
         fileBuffer = await sharp(req.file.buffer)
           .resize({ width: 400, height: 400, fit: "contain" })

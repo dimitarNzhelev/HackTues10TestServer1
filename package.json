@@ -26,6 +26,8 @@
     "express": "^4.17.3",
     "express-flash": "^0.0.2",
     "express-session": "^1.17.3",
+    "fs": "^0.0.1-security",
+    "heic-convert": "^1.2.4",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.3",
     "passport": "^0.6.0",
