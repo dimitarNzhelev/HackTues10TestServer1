@@ -50,6 +50,8 @@ async function checkSavedStatus(userid, postid) {
       "SELECT * FROM saved_posts WHERE user_id = $1 AND post_id = $2",
       [userid, postid]
     );
+
+    console.log(result.rows);
     if (result.rows.length > 0) {
       return true;
     } else {
