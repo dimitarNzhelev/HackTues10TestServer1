@@ -44,7 +44,9 @@ async function getMyPosts(userId) {
   const posts = await S3Service.addImageUrls(result.rows);
   for (post in posts) {
     post.author = await getUserById(post.user_id);
+    console.log(post.author);
     post.author = post.author.name;
+    console.log(post.author);
   }
   return posts.length > 0 ? posts : null;
 }
