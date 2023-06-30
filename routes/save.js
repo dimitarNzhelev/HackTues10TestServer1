@@ -25,7 +25,7 @@ router.get("/:id/status", async (req, res) => {
 router.post("/:id", bodyParser.json(), async (req, res) => {
   const { userid, postid } = req.body;
   try {
-    if (await checkSavedStatus(userid, postid)) {
+    if (await checkSavedStatus(postid, userid)) {
       await unsavePost(userid, postid);
       res.status(200).json({ message: "Post unsaved successfully." });
     } else {
