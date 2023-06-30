@@ -1,7 +1,5 @@
 const express = require("express");
 const app = express();
-const WebSocket = require("ws");
-const http = require("http");
 const flash = require("express-flash");
 const cors = require("cors");
 const homeRouter = require("./routes/home");
@@ -13,21 +11,6 @@ const commentsRouter = require("./routes/comments");
 const authRoutes = require("./routes/auth.js");
 const cookieParser = require("cookie-parser");
 const saveRouter = require("./routes/save");
-
-const server = http.createServer(app);
-const wss = new WebSocket.Server({ server });
-
-wss.on("connection", (ws) => {
-  console.log("Client connected");
-
-  ws.on("close", () => {
-    console.log("Client disconnected");
-  });
-
-  ws.on("message", (message) => {
-    console.log("Received:", message);
-  });
-});
 
 const PORT = 8080;
 
@@ -69,6 +52,6 @@ app.use("/dashboard/posts/comments", commentsRouter);
 app.use("/dashboard/posts/save", saveRouter);
 app.use("/dashboard/posts", postsRouter);
 
-server.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log("Server started on port", PORT);
 });
