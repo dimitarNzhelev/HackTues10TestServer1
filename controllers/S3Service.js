@@ -62,8 +62,6 @@ async function deletePostById(id) {
   const command = new DeleteObjectCommand(params);
   await s3.send(command);
 
-  console.log("Passed S3 delete");
-
   const invalidationParams = {
     DistributionId: cloudFontDistId,
     InvalidationBatch: {
@@ -78,7 +76,6 @@ async function deletePostById(id) {
   const invalidationCommand = new CreateInvalidationCommand(invalidationParams);
   await cloudfront.send(invalidationCommand);
 
-  console.log("Passed CloudFront invalidation");
   await pool.query("DELETE FROM saved_posts WHERE post_id = $1", [id]);
   await pool.query("DELETE FROM likes WHERE post_id = $1", [id]);
   await pool.query("DELETE FROM comments WHERE post_id = $1", [id]);

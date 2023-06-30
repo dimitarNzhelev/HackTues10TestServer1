@@ -15,14 +15,11 @@ router.get("/:id", async (req, res) => {
       await pool.query("SELECT * FROM comments WHERE post_id = $1", [postId])
     ).rows;
 
-    console.log(comments);
-
     const totalCommentsResult = await pool.query(
       "SELECT COUNT(*) FROM comments WHERE post_id = $1",
       [postId]
     );
     const totalComments = totalCommentsResult.rows[0].count;
-    console.log(totalComments);
     for (let i = 0; i < comments.length; i++) {
       let user = await getUserById(comments[i].user_id);
       comments[i].username = user.name;

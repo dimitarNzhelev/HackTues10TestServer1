@@ -59,12 +59,6 @@ async function uploadPost(req) {
 
       if (req.file.mimetype === "image/gif") {
         fileBuffer = req.file.buffer;
-      } else if (req.file.mimetype === "image/heic") {
-        fileBuffer = await heicConvert({
-          buffer: fs.readFileSync(req.file.path),
-          format: "JPEG",
-          quality: 1,
-        });
       } else {
         fileBuffer = await sharp(req.file.buffer)
           .resize({ width: 400, height: 400, fit: "contain" })

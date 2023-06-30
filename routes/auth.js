@@ -60,7 +60,6 @@ router.post("/login", async (req, res, next) => {
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (isMatch) {
-      console.log("THERE IS A MATCH");
       req.session.user = user;
       return res.status(200).json({ user: user });
     }
