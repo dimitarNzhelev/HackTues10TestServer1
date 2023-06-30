@@ -73,14 +73,14 @@ router.post("/login", async (req, res, next) => {
 });
 
 router.get("/logout", (req, res) => {
-  req.session.destroy(function (err) {
-    if (err) {
-      console.log(err);
-      return res.json({ message: "Error occurred during logout" });
-    } else {
-      return res.json({ message: "You have logged out successfully" });
-    }
-  });
+  try {
+    req.session = null;
+
+    return res.json({ message: "You have logged out successfully" });
+  } catch (err) {
+    console.error(err);
+    return res.json({ message: "Error occurred during logout" });
+  }
 });
 
 router.get("/:id", async (req, res) => {

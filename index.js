@@ -61,11 +61,6 @@ app.use(
 );
 
 app.use("/auth", authRoutes);
-
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-
 app.use("/dashboard", homeRouter);
 app.use("/dashboard/upload", uploadRouter);
 app.use("/dashboard/myposts", mypostsRouter);
