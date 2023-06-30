@@ -12,7 +12,7 @@ const bodyParser = require("body-parser");
 
 router.get("/:id/status", async (req, res) => {
   const postId = parseInt(req.params.id);
-  const userId = req.userId;
+  const userId = req.session.user.id;
   try {
     const savedStatus = await checkSavedStatus(postId, userId);
     res.status(200).json({ savedStatus });

@@ -56,10 +56,6 @@ async function insertUserAndSendEmail(req, res, name, email, password) {
         if (err) {
           console.log(err);
         } else {
-          req.flash(
-            "success_msg",
-            "Please check your email to verify your account."
-          );
           res.send("Please check your email to verify your account.");
         }
       });
