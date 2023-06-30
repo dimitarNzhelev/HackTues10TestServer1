@@ -6,6 +6,7 @@ const {
   getSavedPostsByUserId,
   checkSavedStatus,
 } = require("../controllers/saveController");
+const { getUserById } = require("../controllers/userController");
 const bodyParser = require("body-parser");
 
 router.get("/:id/status", async (req, res) => {
