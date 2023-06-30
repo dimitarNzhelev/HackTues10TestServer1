@@ -43,6 +43,7 @@ router.get("/", async (req, res) => {
 });
 
 router.delete("/:id", async (req, res) => {
+  console.log("DELETE POST");
   const id = req.params.id;
   if (await deletePostById(id)) {
     res.status(200).send("Post deleted successfully");
