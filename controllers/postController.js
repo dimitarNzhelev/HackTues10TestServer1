@@ -75,6 +75,7 @@ async function uploadPost(req) {
 }
 
 async function deletePostById(id) {
+  console.log("calling delete post from the delepost id, calling the S3.");
   return S3Service.deletePostById(id);
 }
 
