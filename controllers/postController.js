@@ -23,23 +23,23 @@ const s3 = new S3Client({
 });
 
 // Fisher-Yates (Knuth) Shuffle algorithm
-function shuffle(array) {
-  var currentIndex = array.length,
-    temporaryValue,
-    randomIndex;
-
-  while (0 !== currentIndex) {
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
+function shuffle(posts) {
+  let weightedArray = [];
+  for (let i = 0; i < posts.length; i++) {
+    for (let j = 0; j < posts[i].totallikes + 1; j++) {
+      weightedArray.push(posts[i]);
+    }
   }
 
-  return array;
-}
+  for (let i = weightedArray.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    let temp = weightedArray[i];
+    weightedArray[i] = weightedArray[j];
+    weightedArray[j] = temp;
+  }
 
+  return weightedArray;
+}
 async function getMyPosts(userId) {
   const result = await pool.query("SELECT * FROM posts WHERE user_id = $1", [
     userId,
