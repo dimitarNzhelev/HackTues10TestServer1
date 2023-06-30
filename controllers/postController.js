@@ -4,6 +4,7 @@ const S3Service = require("./S3Service.js");
 const { PutObjectCommand, S3Client } = require("@aws-sdk/client-s3");
 const sharp = require("sharp");
 const dotenv = require("dotenv");
+const { getUserById } = require("./userController");
 dotenv.config();
 const bucketName = process.env.BUCKET_NAME;
 const bucketRegion = process.env.BUCKET_REGION;
@@ -40,7 +41,12 @@ async function getMyPosts(userId) {
   const result = await pool.query("SELECT * FROM posts WHERE user_id = $1", [
     userId,
   ]);
-  return S3Service.addImageUrls(result.rows);
+  const posts = await S3Service.addImageUrls(result.rows);
+  for (post in posts) {
+    post.author = await getUserById(post.user_id);
+    post.author = post.author.name;
+  }
+  return posts.length > 0 ? posts : null;
 }
 
 async function uploadPost(req) {
@@ -75,7 +81,6 @@ async function uploadPost(req) {
 }
 
 async function deletePostById(id) {
-  console.log("calling delete post from the delepost id, calling the S3.");
   return S3Service.deletePostById(id);
 }
 

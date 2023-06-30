@@ -26,7 +26,6 @@ router.get("/", async (req, res) => {
       post.author = await getUserById(post.user_id);
       post.author = post.author.name;
     }
-    console.log(posts);
     res.send({ posts: posts });
   } else {
     res.send({ posts: null });
@@ -38,7 +37,6 @@ router.get("/:id", async (req, res) => {
   const postData = await getPostById(postId);
   const userId = postData.user_id;
   const userData = await getUserById(userId);
-  console.log("IN SPECIFIC POST", userData);
   postData.imageUrl = getSignedUrl({
     url: "https://d2skheuztgfb2.cloudfront.net/" + postData.imagename,
     dateLessThan: new Date(Date.now() + 60 * 60 * 1000 * 24),
@@ -50,7 +48,6 @@ router.get("/:id", async (req, res) => {
     let user = await getUserById(comments[i].user_id);
     comments[i].username = user.name;
   }
-  console.log(comments);
   res.send({
     post: postData,
     user: userData,

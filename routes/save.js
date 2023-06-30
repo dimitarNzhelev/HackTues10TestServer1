@@ -39,10 +39,7 @@ router.post("/:id", bodyParser.json(), async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const userid = req.session.user.id;
-    console.log(userid);
-
     const savedPosts = await getSavedPostsByUserId(userid);
-
     res.send({ posts: savedPosts });
   } catch (error) {
     console.error("Error getting saved posts:", error);
