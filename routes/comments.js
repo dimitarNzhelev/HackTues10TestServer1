@@ -5,9 +5,7 @@ const {
   updateCommentById,
   createComment,
 } = require("../controllers/commentController");
-
 const { getUserById } = require("../controllers/userController");
-
 const { pool } = require("../config/dbConf");
 
 router.get("/:id", async (req, res) => {
@@ -40,7 +38,6 @@ router.get("/:id", async (req, res) => {
 router.post("/:id", express.json(), async (req, res) => {
   const postId = req.body.postId;
   const userId = req.session.user.id;
-  console.log(userId);
   const commentText = req.body.commentText;
   try {
     const comment = await createComment(postId, userId, commentText);
