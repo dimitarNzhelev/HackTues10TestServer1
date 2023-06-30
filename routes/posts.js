@@ -24,7 +24,7 @@ router.get("/", async (req, res) => {
       });
 
       post.author = await getUserById(post.user_id);
-      console.log(post.author.name);
+      post.author = post.author.name;
     }
     console.log(posts);
     res.send({ posts: posts });
