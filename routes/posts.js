@@ -23,7 +23,8 @@ router.get("/", async (req, res) => {
         keyPairId: process.env.CDN_KEY_PAIR_ID,
       });
 
-      post.author = getUserById(post.user_id).name;
+      post.author = getUserById(post.user_id);
+      console.log(post.author);
     }
     console.log(posts);
     res.send({ posts: posts });
