@@ -40,6 +40,10 @@ router.get("/", async (req, res) => {
   try {
     const userid = req.session.user.id;
     const savedPosts = await getSavedPostsByUserId(userid);
+    for (let post of savedPosts) {
+      post.author = await getUserById(post.user_id);
+      post.author = post.author.name;
+    }
     res.send({ posts: savedPosts });
   } catch (error) {
     console.error("Error getting saved posts:", error);
