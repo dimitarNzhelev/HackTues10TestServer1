@@ -30,8 +30,10 @@ const s3 = new S3Client({
 router.get("/", async (req, res) => {
   try {
     if (req.session.user) {
+      const posts = await getMyPosts(req.session.user.id);
+      console.log(posts);
       res.send({
-        posts: await getMyPosts(req.session.user.id),
+        posts: posts,
       });
     } else {
       res.send({ posts: null });
@@ -49,16 +51,6 @@ router.delete("/:id", async (req, res) => {
   } else {
     res.status(404).send("Post not found");
   }
-});
-
-router.get("/:id/update", async (req, res) => {
-  const id = req.params.id;
-  const post = await pool.query(`SELECT * FROM posts WHERE id = $1`, [id]);
-  if (!post) {
-    res.status(404).send("Post not found");
-    return;
-  }
-  res.render("updatePost", { post: post.rows[0] });
 });
 
 router.get("/:id/share", async (req, res) => {

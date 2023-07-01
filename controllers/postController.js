@@ -5,8 +5,6 @@ const { PutObjectCommand, S3Client } = require("@aws-sdk/client-s3");
 const sharp = require("sharp");
 const dotenv = require("dotenv");
 const { getUserById } = require("./userController");
-const fs = require("fs");
-const heicConvert = require("heic-convert");
 
 dotenv.config();
 const bucketName = process.env.BUCKET_NAME;
