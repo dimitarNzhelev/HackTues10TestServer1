@@ -5,6 +5,8 @@ const { PutObjectCommand, S3Client } = require("@aws-sdk/client-s3");
 const sharp = require("sharp");
 const dotenv = require("dotenv");
 const { getUserById } = require("./userController");
+const { execFile } = require("child_process");
+const gifsicle = require("gifsicle");
 
 dotenv.config();
 const bucketName = process.env.BUCKET_NAME;
@@ -35,6 +37,23 @@ function shuffle(posts) {
   return posts;
 }
 
+const resizeGif = (buffer, width, height) => {
+  return new Promise((resolve, reject) => {
+    execFile(
+      gifsicle,
+      ["--resize", `${width}x${height}`, "--output", "-", "-"],
+      { input: buffer },
+      (error, output) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(output);
+        }
+      }
+    );
+  });
+};
+
 async function getMyPosts(userId) {
   const result = await pool.query("SELECT * FROM posts WHERE user_id = $1", [
     userId,
@@ -52,15 +71,13 @@ async function uploadPost(req) {
     if (req.file) {
       let fileBuffer;
 
-      // if (req.file.mimetype === "image/gif") {
-      //   fileBuffer = req.file.buffer;
-      // } else {
-      //   fileBuffer = await sharp(req.file.buffer)
-      //     .resize({ width: 400, height: 400, fit: "contain" })
-      //     .toBuffer();
-      // }
-      fileBuffer = req.file.buffer;
-
+      if (req.file.mimetype === "image/gif") {
+        fileBuffer = await resizeGif(req.file.buffer, 1920, 1000);
+      } else {
+        fileBuffer = await sharp(req.file.buffer)
+          .resize({ width: 1920, height: 1000, fit: "contain" })
+          .toBuffer();
+      }
       const fileName = await generateFileName();
       const command = new PutObjectCommand({
         Bucket: bucketName,
