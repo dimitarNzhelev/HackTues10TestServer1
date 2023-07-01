@@ -102,12 +102,12 @@ router.post("/:id/update", upload.single("photo"), async (req, res) => {
       const deleteCommand = new DeleteObjectCommand(deleteParams);
       await s3.send(deleteCommand);
 
-      // const fileBuffer = await sharp(req.file.buffer)
-      //   .resize({ width: 300, height: 300, fit: "contain" })
-      //   .toBuffer();
+      const fileBuffer = await sharp(req.file.buffer)
+        .resize({ width: 1920, height: 1080, fit: "contain" })
+        .toBuffer();
       const newImageKey = await generateFileName();
 
-      const fileBuffer = req.file.buffer;
+      // const fileBuffer = req.file.buffer;
       const uploadParams = {
         Bucket: bucketName,
         Key: newImageKey,
