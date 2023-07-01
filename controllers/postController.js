@@ -52,13 +52,14 @@ async function uploadPost(req) {
     if (req.file) {
       let fileBuffer;
 
-      if (req.file.mimetype === "image/gif") {
-        fileBuffer = req.file.buffer;
-      } else {
-        fileBuffer = await sharp(req.file.buffer)
-          .resize({ width: 400, height: 400, fit: "contain" })
-          .toBuffer();
-      }
+      // if (req.file.mimetype === "image/gif") {
+      //   fileBuffer = req.file.buffer;
+      // } else {
+      //   fileBuffer = await sharp(req.file.buffer)
+      //     .resize({ width: 400, height: 400, fit: "contain" })
+      //     .toBuffer();
+      // }
+      fileBuffer = req.file.buffer;
 
       const fileName = await generateFileName();
       const command = new PutObjectCommand({
