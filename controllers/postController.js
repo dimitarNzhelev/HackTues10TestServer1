@@ -6,8 +6,19 @@ const sharp = require("sharp");
 const dotenv = require("dotenv");
 const { getUserById } = require("./userController");
 const { execFile } = require("child_process");
-const gifsicle = require("gifsicle");
+let gifsicle;
+import("gifsicle")
+  .then((module) => {
+    gifsicle = module;
+  })
+  .catch((err) => {
+    console.error(err);
+  });
 
+async function getGifcale() {
+  gifsicle = await import("gifsicle");
+}
+getGifcale();
 dotenv.config();
 const bucketName = process.env.BUCKET_NAME;
 const bucketRegion = process.env.BUCKET_REGION;
