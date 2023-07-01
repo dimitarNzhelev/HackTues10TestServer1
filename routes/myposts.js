@@ -61,6 +61,22 @@ router.get("/:id/share", async (req, res) => {
   res.send((await S3Service.addImageUrls(post.rows))[0].imageUrl);
 });
 
+router.get("/:id/update", async (req, res) => {
+  const id = req.params.id;
+  const user = req.session.user;
+  const post = await pool.query(
+    `SELECT * FROM posts WHERE id = $1 AND user_id = $2`,
+    [id, user.id]
+  );
+
+  if (!post) {
+    res.status(404).send("Post not found");
+    return;
+  }
+  console.log("POST VISIBILITY: ", post.rows[0].visibility);
+  res.send(post.rows[0].visibility);
+});
+
 router.post("/:id/update", upload.single("photo"), async (req, res) => {
   const id = req.params.id;
   const { caption, description, visibility } = req.body;
