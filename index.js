@@ -35,13 +35,13 @@ app.use(
 
 app.enable("trust proxy");
 //Development purposes
-// app.use(
-//   cors({
-//     origin: allowedOrigin,
-//     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-//     credentials: true,
-//   })
-// );
+app.use(
+  cors({
+    origin: allowedOrigin,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
+  })
+);
 
 app.use("/auth", authRoutes);
 app.use("/dashboard", homeRouter);
