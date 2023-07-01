@@ -51,7 +51,7 @@ function shuffle(posts) {
 const resizeGif = (buffer, width, height) => {
   return new Promise((resolve, reject) => {
     execFile(
-      gifsicle,
+      "gifsicle",
       ["--resize", `${width}x${height}`, "--output", "-", "-"],
       { input: buffer },
       (error, output) => {
