@@ -10,11 +10,13 @@ const commentsRouter = require("./routes/comments");
 const authRoutes = require("./routes/auth.js");
 const cookieParser = require("cookie-parser");
 const saveRouter = require("./routes/save");
+const flash = require("express-flash");
 
 const PORT = 8080;
 
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(flash());
 
 const allowedOrigin = ["https://jellyfish-app-5kx28.ondigitalocean.app"];
 
