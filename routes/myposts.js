@@ -73,8 +73,7 @@ router.get("/:id/update", async (req, res) => {
     res.status(404).send("Post not found");
     return;
   }
-  console.log("POST VISIBILITY: ", post.rows[0].visibility);
-  res.send(post.rows[0].visibility);
+  res.send(post.rows[0]);
 });
 
 router.post("/:id/update", upload.single("photo"), async (req, res) => {
@@ -88,12 +87,12 @@ router.post("/:id/update", upload.single("photo"), async (req, res) => {
       res.status(404).send("Post not found");
       return;
     }
-
-    await pool.query("UPDATE posts SET visibility = $1 WHERE id = $2", [
-      visibility,
-      id,
-    ]);
-
+    if (post.rows[0].visibility != visibility) {
+      await pool.query("UPDATE posts SET visibility = $1 WHERE id = $2", [
+        visibility,
+        id,
+      ]);
+    }
     if (req.file) {
       const prevImageKey = post.rows[0].imagename;
       const deleteParams = {
