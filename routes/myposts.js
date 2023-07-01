@@ -73,7 +73,7 @@ router.get("/:id/update", async (req, res) => {
     res.status(404).send("Post not found");
     return;
   }
-  res.send(post.rows[0]);
+  res.json(post.rows[0]);
 });
 
 router.post("/:id/update", upload.single("photo"), async (req, res) => {
