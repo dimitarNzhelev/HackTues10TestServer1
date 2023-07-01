@@ -30,10 +30,8 @@ const s3 = new S3Client({
 router.get("/", async (req, res) => {
   try {
     if (req.session.user) {
-      const posts = await getMyPosts(req.session.user.id);
-      console.log(posts);
       res.send({
-        posts: posts,
+        posts: await getMyPosts(req.session.user.id);,
       });
     } else {
       res.send({ posts: null });

@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-const flash = require("express-flash");
 const cors = require("cors");
 const homeRouter = require("./routes/home");
 const uploadRouter = require("./routes/upload");
@@ -16,7 +15,6 @@ const PORT = 8080;
 
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(flash());
 
 const allowedOrigin = ["https://jellyfish-app-5kx28.ondigitalocean.app"];
 
