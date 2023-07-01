@@ -31,7 +31,7 @@ router.get("/", async (req, res) => {
   try {
     if (req.session.user) {
       res.send({
-        posts: await getMyPosts(req.session.user.id);,
+        posts: await getMyPosts(req.session.user.id),
       });
     } else {
       res.send({ posts: null });
